@@ -1,0 +1,6 @@
+amnsOrgId = "105598156577"
+hstProjectId = "c19c7-c1-dc-hst"
+hstTfServiceAccount = "c19c7c1pdptf-sa-01@c19c7-c1-dc-hst.iam.gserviceaccount.com"
+nprodTfServiceAccount = "c19c7c1pdntf-sa-01@c19c7-c1-dc-sap-nprd.iam.gserviceaccount.com"
+prodTfServiceAccount = "c19c7c1pdptf-sa-03@c19c7-c1-dc-sap-prd.iam.gserviceaccount.com"
+infTfServiceAccount = "c19c7c1pdptf-sa-02@c19c7-c1-dc-inf.iam.gserviceaccount.com"

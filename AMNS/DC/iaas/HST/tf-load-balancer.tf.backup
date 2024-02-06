@@ -1,0 +1,42 @@
+
+
+resource "google_compute_address" "c19c7c1pdpip-c19c7c1pdplb-01-wn-ex" {
+  name = "c19c7c1pdpip-c19c7c1pdplb-01-wn-ex"
+  region = "asia-south1"
+  address_type = "EXTERNAL"
+}
+
+
+resource "google_compute_http_health_check" "c19c7c1pdplb-01-hc" {
+  project = var.hstProjectId
+  name    = "c19c7c1pdplb-01-hc"
+#  tcp_health_check {
+  port  = "4443"
+#  }
+}
+
+resource "google_compute_target_pool" "c19c7c1pdplb-01" {
+  project          = var.hstProjectId
+  name             = "c19c7c1pdplb-01"
+  region           = "asia-south1"
+
+  instances =[
+      "asia-south1-a/c19c7c1pdp6",
+      "asia-south1-a/c19c7c1pdp7"
+  ]
+  health_checks = [google_compute_http_health_check.c19c7c1pdplb-01-hc.self_link]
+}
+
+
+resource "google_compute_forwarding_rule" "c19c7c1pdplb-01-fe" {
+  provider              = google-beta
+  project               = var.hstProjectId
+  name                  = "c19c7c1pdplb-01-fe"
+  target                = google_compute_target_pool.c19c7c1pdplb-01.self_link
+  load_balancing_scheme = "EXTERNAL"
+  ports                    = ["4443"]
+  region                = "asia-south1"
+  ip_address            = google_compute_address.c19c7c1pdpip-c19c7c1pdplb-01-wn-ex.address
+  ip_protocol           = "TCP"
+#  labels                = var.labels
+}
